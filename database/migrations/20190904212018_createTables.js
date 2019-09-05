@@ -13,7 +13,7 @@ exports.up = function(knex) {
         tbl.string('item-name').notNullable();
         tbl.integer('user-id').unsigned().references('id').inTable('users');
         tbl.string('photo-url');
-        tbl.decmial('price');
+        tbl.decimal('price');
         tbl.integer('rating').notNullable();
         tbl.string('wait time');
         tbl.string('comments').notNullable();
