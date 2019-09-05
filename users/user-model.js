@@ -3,7 +3,8 @@ const db = require('../database/db-config.js');
 module.exports = {
     addUser,
     deleteUser,
-    getUserBy
+    getUserBy,
+    updateUser
 }
 
 async function addUser(user) {
@@ -16,4 +17,8 @@ async function deleteUser(id) {
 
 async function getUserBy(filter) {
     return await db('users').where(filter).first()
+}
+
+async function updateUser(id, user) {
+    return await db('users').where({id}).update(user)
 }
