@@ -9,12 +9,23 @@ router.get('/:userId', validateUserId, (req, res) => {
     res.status(200).json(req.user)
 })
 
+router.post('/auth/register', async (req, res) => {
+    const user = req.body;
+    try {
+        const register = await Users.addUser(user);
+        res.status(200).json({message: "Login Success", user: user})
+    }
+    catch(error) {
+        res.status(500).json({message: "Could Not Register User", error: error})
+    }
+})
+
 //Middlewares
 
 async function validateUserId (req, res, next) {
-    const {id} = req.params;
+    const {userId} = req.params;
     try {
-        const user = await Users.getUserBy({id});
+        const user = await Users.getUserBy({id: userId});
         if(user) {
             req.user = user;
             next();
