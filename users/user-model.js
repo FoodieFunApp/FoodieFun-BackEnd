@@ -5,7 +5,9 @@ module.exports = {
     deleteUser,
     getUserBy,
     updateUser,
-    addReview
+    addReview,
+    updateReview,
+    deleteReview
 }
 
 async function addUser(user) {
@@ -30,4 +32,8 @@ async function addReview(review) {
 
 async function updateReview(id, review) {
     return await db('reviews').where({id}).update(review)
+}
+
+async function deleteReview(id) {
+    return await db('reviews').where({id}).del()
 }
