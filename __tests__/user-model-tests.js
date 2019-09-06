@@ -6,7 +6,7 @@ describe('user tests', () => {
     describe('addUser', () => {
 
         beforeEach( async () => {
-            db('users').truncate()
+            await db('users').truncate()
         })
 
         it('should add a user to the db', async () => {
