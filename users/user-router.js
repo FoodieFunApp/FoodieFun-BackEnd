@@ -3,13 +3,15 @@ const router = express.Router();
 
 const Users = require('./user-model.js');
 
+//Routers
+
 router.get('/:userId', validateUserId, (req, res) => {
     res.status(200).json(req.user)
 })
 
 //Middlewares
 
-const validateUserId = async (req, res, next) => {
+async function validateUserId (req, res, next) {
     const {id} = req.params;
     try {
         const user = await Users.getUserBy({id});
