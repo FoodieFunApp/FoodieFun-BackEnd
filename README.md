@@ -24,7 +24,22 @@ dotenv = npm install dotenv
 
 bcrypt.js = npm install bcryptjs
 
+Built with:
 
+Backend:
+  express
+  sqlite3
+  knex
+  jest
+  supertest
+  dotenv
+  cross-env
+  nodemon
+  cors
+  helmet
+  bcryptjs
+  jwt
+  postgres
 
 MVP:
 
