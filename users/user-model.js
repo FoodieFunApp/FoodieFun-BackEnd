@@ -26,6 +26,10 @@ async function updateUser(id, user) {
     return await db('users').where({id}).update(user)
 }
 
+async function getReviews() {
+    return await db('reviews')
+}
+
 async function addReview(review) {
     return await db('reviews').insert(review)
 }
