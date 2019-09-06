@@ -3,8 +3,8 @@ const router = express.Router();
 
 const Users = require('./user-model.js');
 
-router.get('/:userId', (req, res) => {
-
+router.get('/:userId', validateUserId, (req, res) => {
+    res.status(200).json(req.user)
 })
 
 //Middlewares
