@@ -4,12 +4,7 @@ module.exports = {
     addUser,
     deleteUser,
     getUserBy,
-    updateUser,
-    getAllUsers
-}
-
-async function getAllUsers() {
-    return await db('users');
+    updateUser
 }
 
 async function addUser(user) {
