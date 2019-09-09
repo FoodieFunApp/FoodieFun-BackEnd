@@ -52,9 +52,9 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validaateReviewId, a
         await Users.deleteReview(id);
         res.status(201).json({message: "Review Deleted", deletedReview: deletedReview})
     }
-    catch(error {
+    catch(error) {
         res.status(500).json({message: "Could Not Delete Review", error: error});
-    })
+    }
 })
 
 //Middlewares
