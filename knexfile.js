@@ -7,7 +7,7 @@ module.exports = {
     connection: {
       filename: './database/foodiefun.sqlite3'
     },
-    useNullAsDefault = true,
+    useNullAsDefault: true,
     migrations: {
       directory: './database/migrations'
     },
@@ -21,7 +21,7 @@ module.exports = {
     connection: {
       filename: './database/testing.sqlite3'
     },
-    useNullAsDefault = true,
+    useNullAsDefault: true,
     migrations: {
       directory: './database/test-migrations'
     },
