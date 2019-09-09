@@ -45,6 +45,18 @@ router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async
     }
 })
 
+router.delete('/:userId/reviews/:reviewId', validateUserId, validaateReviewId, async (req, res) => {
+    const id = req.params.reviewId;
+    try {
+        const deletedReview = await Users.getReviewsBy({id});
+        await Users.deleteReview(id);
+        res.status(201).json({message: "Review Deleted", deletedReview: deletedReview})
+    }
+    catch(error {
+        res.status(500).json({message: "Could Not Delete Review", error: error});
+    })
+})
+
 //Middlewares
 
 async function validateUserId (req, res, next) {
