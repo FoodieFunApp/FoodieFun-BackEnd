@@ -45,7 +45,7 @@ router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async
     }
 })
 
-router.delete('/:userId/reviews/:reviewId', validateUserId, validaateReviewId, async (req, res) => {
+router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async (req, res) => {
     const id = req.params.reviewId;
     try {
         const deletedReview = await Users.getReviewsBy({id});
