@@ -27,4 +27,20 @@ async function validateUserId(req, res, next) {
     }
 }
 
+async function validateUserCredentials(req, res, next) {
+    const { userCredentials } = req.body;
+    try {
+        const user = await Users.getUserBy({ userCredentials });
+        if (user) {
+            req.user = user;
+            next();
+        } else {
+            res.status(400).json({ message: "user credentials invalid" })
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: "validateUserCredentials error", error: error })
+    }
+}
+
 module.exports = router;
