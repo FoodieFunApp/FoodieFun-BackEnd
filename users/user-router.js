@@ -11,9 +11,4 @@ router.get('/:userId', validateUserId, (req, res) => {
     res.status(200).json(req.user)
 })
 
-
-
-
-
-
 module.exports = router;

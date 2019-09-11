@@ -4,16 +4,12 @@ const jwt = require('jsonwebtoken');
 
 
 
-
-
-
-
 module.exports = {
     validateUserId, authorizeUser, validateUser
 }
 
 
-async function validateUserId(req, res, next) {
+async function validateUserId(req, res, next) { //middlware for validating userID
     const { userId } = req.params;
     try {
         const user = await Users.getUserBy({ id: userId });
@@ -29,7 +25,7 @@ async function validateUserId(req, res, next) {
     }
 }
 
-const authorizeUser = (req, res, next) => {
+const authorizeUser = (req, res, next) => { //middleware for authorization
     const authorization = req.body.authorization;
 
     if(authorization) {
@@ -46,7 +42,7 @@ const authorizeUser = (req, res, next) => {
     }
 };
 
-const validateUser = (req, res, next) => {
+const validateUser = (req, res, next) => { //middleware for validating user or users
     const { username, password } = req.body;
 
     if (username && password ) {
