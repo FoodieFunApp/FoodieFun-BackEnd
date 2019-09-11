@@ -59,14 +59,15 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
 
 //Middlewares
 
-async function validateUserId (req, res, next) {
-    const {userId} = req.params;
+async function validateUserId(req, res, next) {
+    const { userId } = req.params;
     try {
-        const user = await Users.getUserBy({id: userId});
-        if(user) {
+        const user = await Users.getUserBy({ id: userId });
+        if (user) {
             req.user = user;
             next();
         } else {
+<<<<<<< HEAD
             res.status(400).json({message: `User with Id: ${id} does not exist`});
         }
     }
@@ -87,6 +88,13 @@ async function validateReviewId (req, res, next) {
     }
     catch(error) {
         res.status(500).json({message: "validateReviewId Error", error: error})
+=======
+            res.status(400).json({ message: `User with Id: ${id} does not exist` })
+        }
+    }
+    catch (error) {
+        res.status(500).json({ message: "validateUserId Error", error: error })
+>>>>>>> e94cad82a74b1f628cbf3668ef3c325649841843
     }
 }
 

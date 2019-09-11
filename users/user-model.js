@@ -17,7 +17,7 @@ async function addUser(user) {
 }
 
 async function deleteUser(id) {
-    return await db('users').where({id}).del()
+    return await db('users').where({ id }).del()
 }
 
 async function getUserBy(filter) {
@@ -25,7 +25,7 @@ async function getUserBy(filter) {
 }
 
 async function updateUser(id, user) {
-    return await db('users').where({id}).update(user)
+    return await db('users').where({ id }).update(user)
 }
 
 async function getReviews() {
@@ -41,9 +41,9 @@ async function addReview(review) {
 }
 
 async function updateReview(id, review) {
-    return await db('reviews').where({id}).update(review)
+    return await db('reviews').where({ id }).update(review)
 }
 
 async function deleteReview(id) {
-    return await db('reviews').where({id}).del()
+    return await db('reviews').where({ id }).del()
 }
