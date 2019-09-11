@@ -51,3 +51,66 @@ const validateUser = (req, res, next) => { //middleware for validating user or u
         res.status(400).json({ message: 'username and password are required' });
     }
 }
+
+const reviewInputRestaurantName = (req, res, next) => { //middleware for review inputs on restaurant name
+    const { restaurant_name } = req.body;
+
+    if (restaurant_name) {
+        next();
+    } else {
+        res.status(400).json({ message: 'Restaurant Name'});
+    }
+}
+
+const reviewInputRestaurantType = (req, res, next) => { //middleware for restaunrant type
+    const { restaurant_type } = req.body;
+
+    if (restaurant_type) {
+        next();
+    } else {
+        res.status(400).json({ message: 'Restaurant Type'});
+    }
+}
+
+const reviewInputItemName = (req, res, next) => { //middleware for item name
+    const { item_name } = req.body;
+
+    if (item_name) {
+        next();
+    } else {
+        res.status(400).json({ message: 'Item Name'});
+    }
+}
+
+const reviewInputRating = (req, res, next) => { //middleware for input rating
+    const { rating } = req.body;
+
+    if (rating) {
+        next();
+    } else {
+        res.status(400).json({ message: 'Rating'});
+    }
+}
+
+const reviewInputComments = (req, res, next) => { //middleware for comments
+    const { comments } = req.body;
+
+    if (comments) {
+        next();
+    } else {
+        res.status(400).json({ message: 'Comments'});
+    }
+}
+
+const reviewInputVisitDate = (req, res, next) => { //middleware for date visited
+    const { visit_date } = req.body;
+
+    if (visit_date) {
+        next();
+    } else {
+        res.status(400).json({ message: 'Date visited'});
+    }
+}
+
+
+
