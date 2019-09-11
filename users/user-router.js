@@ -59,11 +59,11 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
 
 //Middlewares
 
-async function validateUserId (req, res, next) {
-    const {userId} = req.params;
+async function validateUserId(req, res, next) {
+    const { userId } = req.params;
     try {
-        const user = await Users.getUserBy({id: userId});
-        if(user) {
+        const user = await Users.getUserBy({ id: userId });
+        if (user) {
             req.user = user;
             next();
         } else {
