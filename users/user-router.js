@@ -12,7 +12,10 @@ router.get('/:userId', validateUserId, (req, res) => {
 })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 7bea0664128ea03bce7543bc90218f76f6fbdd1a
 router.put('/:userId', validateUserId, async (req, res) => {
     const {userId} = req.params;
     const user = req.body;
@@ -61,6 +64,7 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
     }
 })
 
+<<<<<<< HEAD
 //Middlewares
 
 async function validateUserId(req, res, next) {
@@ -95,4 +99,6 @@ async function validateReviewId (req, res, next) {
 }
 
 >>>>>>> 7933217db3203f0c137b3a01ab1d5badcacd4e27
+=======
+>>>>>>> 7bea0664128ea03bce7543bc90218f76f6fbdd1a
 module.exports = router;
