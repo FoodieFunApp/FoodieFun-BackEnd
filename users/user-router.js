@@ -67,6 +67,17 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
     }
 })
 
+router.post('/:userId/reviews', async (req, res) => {
+    const postReview = req.params;
+    try{
+        const postReview = await Users.getReviewsBy({id});
+        await Users.postReview(id);
+        res.status(201).json({message: "Post Review", postReview: postReview})
+    }
+    catch(error) {
+        res.status(500).json({message: "Could not post your review", error: error});
+    }
+})
 
 
 module.exports = router;
