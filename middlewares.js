@@ -52,7 +52,7 @@ const validateUser = (req, res, next) => { //middleware for validating user or u
     }
 }
 
-const validateReviewInputs = (req, res, next) => { //middleware for review inputs on restaurant name
+const validateReviewInputs = (req, res, next) => { //middleware for review inputs on restaurant name, restaurant type, item name, rating, comments and visit date
     const { restaurant_name, restaurant_type, item_name, rating, comments, visit_date } = req.body;
 
     if (restaurant_name) {
