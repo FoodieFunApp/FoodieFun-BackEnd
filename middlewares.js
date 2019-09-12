@@ -53,41 +53,12 @@ const validateUser = (req, res, next) => { //middleware for validating user or u
 }
 
 const validateReviewInputs = (req, res, next) => { //middleware for review inputs on restaurant name, restaurant type, item name, rating, comments and visit date
-    const { restaurant_name, restaurant_type, item_name, rating, comments, visit_date } = req.body;
+    const { restaurantName, restaurantType, itemName, rating, comments, visitDate } = req.body;
 
-    if (restaurant_name) {
+    if (restaurantName && restaurantType && itemName && rating && comments && visitDate) {
         next();
     } else {
-        res.status(400).json({ message: 'Restaurant Name'});
+        res.status(400).json({ message: 'Missing required information'});
     }
-    if (restaurant_type) {
-        next();
-    } else {
-        res.status(400).json({ message: 'Restaurant Type'});
-    }
-    if (item_name) {
-        next();
-    } else {
-        res.status(400).json({ message: 'Item Name'});
-    }
-    if (rating) {
-        next();
-    } else {
-        res.status(400).json({ message: 'Rating'});
-    }
-    if (comments) {
-        next();
-    } else {
-        res.status(400).json({ message: 'Comments'});
-    }
-    if (visit_date) {
-        next();
-    } else {
-        res.status(400).json({ message: 'Date visited'});
-    }
+      
 }
-
-
-
-
-

@@ -19,7 +19,7 @@ router.put('/:userId', validateUserId, async (req, res) => {
         res.status(201).json({message: "User Updated", user: user});
     }
     catch(error) {
-        res.status(500).json({message: "Could Not Update User", erro: error});
+        res.status(500).json({message: "Could Not Update User", error: error});
     }
 })
 
