@@ -11,11 +11,6 @@ router.get('/:userId', validateUserId, (req, res) => {
     res.status(200).json(req.user)
 })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 7bea0664128ea03bce7543bc90218f76f6fbdd1a
 router.put('/:userId', validateUserId, async (req, res) => {
     const {userId} = req.params;
     const user = req.body;
@@ -64,41 +59,6 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
     }
 })
 
-<<<<<<< HEAD
-//Middlewares
 
-async function validateUserId(req, res, next) {
-    const { userId } = req.params;
-    try {
-        const user = await Users.getUserBy({ id: userId });
-        if (user) {
-            req.user = user;
-            next();
-        } else {
-            res.status(400).json({message: `User with Id: ${id} does not exist`});
-        }
-    }
-    catch(error) {
-        res.status(500).json({message: "validateUserId Error", error: error});
-    }
-}
 
-async function validateReviewId (req, res, next) {
-    const id = req.params.reviewId;
-    try {
-        const review = await Users.getReviewsBy({id});
-        if(review) {
-            next();
-        } else {
-            res.status(400).json({message: `Review with id ${id} does not exist`})
-        }
-    }
-    catch(error) {
-        res.status(500).json({message: "validateReviewId Error", error: error})
-    }
-}
-
->>>>>>> 7933217db3203f0c137b3a01ab1d5badcacd4e27
-=======
->>>>>>> 7bea0664128ea03bce7543bc90218f76f6fbdd1a
 module.exports = router;
