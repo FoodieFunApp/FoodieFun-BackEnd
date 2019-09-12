@@ -7,17 +7,8 @@ const Users = require('./user-model.js');
 
 //Routers
 
-router.get('/:userId', validateUserId, async (req, res) => {
-    const {userId} = req.params;
-    const user = req.body;
-    try {
-        await Users(userId, user);
-        res.status(201).json({message: "User validated"});
-    }
-    catch(error) {
-        res.status(500).json({ message: "Could not validate user", error: error});
-    }
-})
+router.get('/:userId', validateUserId, (req, res) => {
+    res.status(200).json(req.user)
 
 router.put('/:userId', validateUserId, async (req, res) => {
     const {userId} = req.params;
