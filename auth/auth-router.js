@@ -2,6 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secrets = require('../config/secrets.js');
+const {validateUser} = require('../middlewares.js');
 
 const Users = require('../users/user-model');
 
@@ -13,7 +14,7 @@ const Users = require('../users/user-model');
 // these will be used in any /login request to validate
 // the login attempt.
 //
-router.post('/register', (req, res) => {
+router.post('/register', validateUser, (req, res) => {
     let user = req.body;
     const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
     user.password = hash;
@@ -27,7 +28,7 @@ router.post('/register', (req, res) => {
         });
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', validateUser, (req, res) => {
     // get the username and password from the body.
     let { username, password } = req.body;
 

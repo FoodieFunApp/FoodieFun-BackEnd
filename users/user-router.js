@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {validateUserId, validateReviewId, validateReviewInputs, authorizeUser, validateUser} = require('../middlewares.js');
+const {validateUserId, validateReviewId, validateReviewInputs, authorizeUser} = require('../middlewares.js');
 
 const Users = require('./user-model.js');
 

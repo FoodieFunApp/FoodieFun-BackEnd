@@ -1,8 +1,6 @@
-const Users = require('./user-model.js');
-const bcrypt = require('bcryptjs');
+const Users = require('./users/user-model.js');
 const jwt = require('jsonwebtoken');
-
-
+const secrets = require('./config/secrets.js');
 
 module.exports = {
     validateUserId,
@@ -11,7 +9,6 @@ module.exports = {
     validateReviewInputs,
     validateReviewId
 }
-
 
 async function validateUserId(req, res, next) { //middlware for validating userID
     const { userId } = req.params;
@@ -29,11 +26,11 @@ async function validateUserId(req, res, next) { //middlware for validating userI
     }
 }
 
-const authorizeUser = (req, res, next) => { //middleware for authorization
-    const authorization = req.body.authorization;
+function authorizeUser(req, res, next) { //middleware for authorization
+    const authorization = req.headers.authorization;
 
     if(authorization) {
-        jwt.verify(authorization, 'areyouforreal', (err, decodedToken) => {
+        jwt.verify(authorization, secrets.jwtSecret, (err, decodedToken) => {
             if(err) {
                 res.status(401).json({message: 'areyouserious?'});
             } else { 
@@ -46,7 +43,7 @@ const authorizeUser = (req, res, next) => { //middleware for authorization
     }
 };
 
-const validateUser = (req, res, next) => { //middleware for validating user or users
+function validateUser(req, res, next) { //middleware for validating user or users
     const { username, password } = req.body;
 
     if (username && password ) {
@@ -56,7 +53,7 @@ const validateUser = (req, res, next) => { //middleware for validating user or u
     }
 }
 
-const validateReviewInputs = (req, res, next) => { //middleware for review inputs on restaurant name, restaurant type, item name, rating, comments and visit date
+function validateReviewInputs(req, res, next) { //middleware for review inputs on restaurant name, restaurant type, item name, rating, comments and visit date
     const { restaurantName, restaurantType, itemName, rating, comments, visitDate } = req.body;
 
     if (restaurantName && restaurantType && itemName && rating && comments && visitDate) {
