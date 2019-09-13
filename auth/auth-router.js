@@ -55,7 +55,8 @@ router.post('/login', validateUser, (req, res) => {
 function genToken(user) {
     const payload = {
         subject: "user",
-        userId: user.id
+        userId: user.id,
+        username: user.username
     };
 
     const secret = secrets.jwtSecret;
