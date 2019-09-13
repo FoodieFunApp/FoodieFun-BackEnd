@@ -8,16 +8,16 @@ exports.up = function(knex) {
     })
     .createTable('reviews', tbl => {
         tbl.increments('id');
-        tbl.string('restaurant-name').notNullable();
-        tbl.string('restaurant-type').notNullable();
-        tbl.string('item-name').notNullable();
-        tbl.integer('user-id').unsigned().references('id').inTable('users');
-        tbl.string('photo-url');
+        tbl.string('restaurantName').notNullable();
+        tbl.string('restaurantType').notNullable();
+        tbl.string('itemName').notNullable();
+        tbl.integer('userId').unsigned().references('id').inTable('users');
+        tbl.string('photoUrl');
         tbl.decimal('price');
         tbl.integer('rating').notNullable();
-        tbl.string('wait time');
+        tbl.string('waitTime');
         tbl.string('comments').notNullable();
-        tbl.date('visit-date').notNullable();
+        tbl.date('visitDate').notNullable();
     })
 };
 

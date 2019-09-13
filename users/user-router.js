@@ -33,6 +33,29 @@ router.delete('/:userId', validateUserId, async (req, res) => {
     }
 })
 
+router.get('/:userId/reviews', validateUserId, async(req, res) => {
+    const {userId} = req.params
+    try {
+        const reviews = await Users.getReviews(userId)
+        res.status(200).json(reviews)
+    }
+    catch(error) {
+        res.status(500).json({message: "Could Not Get Reviews", error: error})
+    }
+})
+
+router.post('/:userId/reviews', validateUserId, async ( req, res ) => {
+    const review = req.body
+    try {
+        console.log(review)
+        const add = await Users.addReview(review)
+        res.status(200).json({message: "Review Added", review: review})
+    }
+    catch(error) {
+        res.status(500).json({message: "Could Not Add Review", error: error})
+    }
+})
+
 router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async (req, res) => {
     const {reviewId} = req.params;
     const review = req.body;
@@ -60,14 +83,13 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
 //Middlewares
 
 async function validateUserId(req, res, next) {
-    const { userId } = req.params;
+    const id = req.params.userId;
     try {
-        const user = await Users.getUserBy({ id: userId });
+        const user = await Users.getUserBy({ id });
         if (user) {
             req.user = user;
             next();
         } else {
-<<<<<<< HEAD
             res.status(400).json({message: `User with Id: ${id} does not exist`});
         }
     }
@@ -88,13 +110,6 @@ async function validateReviewId (req, res, next) {
     }
     catch(error) {
         res.status(500).json({message: "validateReviewId Error", error: error})
-=======
-            res.status(400).json({ message: `User with Id: ${id} does not exist` })
-        }
-    }
-    catch (error) {
-        res.status(500).json({ message: "validateUserId Error", error: error })
->>>>>>> e94cad82a74b1f628cbf3668ef3c325649841843
     }
 }
 
