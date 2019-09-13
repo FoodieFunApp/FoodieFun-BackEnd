@@ -1,15 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
+const {validateUserId, validateReviewId, validateReviewInputs, authorizeUser, validateUser} = require('../middlewares.js');
+
 const Users = require('./user-model.js');
 
 //Routers
 
-router.get('/:userId', validateUserId, (req, res) => {
-    res.status(200).json(req.user)
+router.get('/:userId', authorizeUser, validateUserId, async (req, res) => {
+    const {userId} = req.params;
+    const user = req.body;
+    try {
+        await Users(userId, user);
+        res.status(201).json({message: "User validated"});
+    }
+    catch(error) {
+        res.status(500).json({ message: "Could not validate user", error: error});
+    }
 })
 
-router.put('/:userId', validateUserId, async (req, res) => {
+router.put('/:userId', authorizeUser, validateUserId, async (req, res) => {
     const {userId} = req.params;
     const user = req.body;
     try {
@@ -17,11 +27,11 @@ router.put('/:userId', validateUserId, async (req, res) => {
         res.status(201).json({message: "User Updated", user: user});
     }
     catch(error) {
-        res.status(500).json({message: "Could Not Update User", erro: error});
+        res.status(500).json({message: "Could Not Update User", error: error});
     }
 })
 
-router.delete('/:userId', validateUserId, async (req, res) => {
+router.delete('/:userId', authorizeUser, validateUserId, async (req, res) => {
     const id = req.params.userId;
     try {
         const deletedUser = await Users.getUserBy({id})
@@ -33,7 +43,7 @@ router.delete('/:userId', validateUserId, async (req, res) => {
     }
 })
 
-router.get('/:userId/reviews', validateUserId, async(req, res) => {
+router.get('/:userId/reviews', authorizeUser, validateUserId, async(req, res) => {
     const {userId} = req.params
     try {
         const reviews = await Users.getReviews(userId)
@@ -44,7 +54,7 @@ router.get('/:userId/reviews', validateUserId, async(req, res) => {
     }
 })
 
-router.post('/:userId/reviews', validateUserId, async ( req, res ) => {
+router.post('/:userId/reviews', authorizeUser, validateUserId, validateReviewInputs, async ( req, res ) => {
     const review = req.body
     try {
         console.log(review)
@@ -56,7 +66,7 @@ router.post('/:userId/reviews', validateUserId, async ( req, res ) => {
     }
 })
 
-router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async (req, res) => {
+router.put('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, validateReviewInputs, async (req, res) => {
     const {reviewId} = req.params;
     const review = req.body;
     try {
@@ -68,7 +78,7 @@ router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async
     }
 })
 
-router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async (req, res) => {
+router.delete('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, async (req, res) => {
     const id = req.params.reviewId;
     try {
         const deletedReview = await Users.getReviewsBy({id});
@@ -79,38 +89,5 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
         res.status(500).json({message: "Could Not Delete Review", error: error});
     }
 })
-
-//Middlewares
-
-async function validateUserId(req, res, next) {
-    const id = req.params.userId;
-    try {
-        const user = await Users.getUserBy({ id });
-        if (user) {
-            req.user = user;
-            next();
-        } else {
-            res.status(400).json({message: `User with Id: ${id} does not exist`});
-        }
-    }
-    catch(error) {
-        res.status(500).json({message: "validateUserId Error", error: error});
-    }
-}
-
-async function validateReviewId (req, res, next) {
-    const id = req.params.reviewId;
-    try {
-        const review = await Users.getReviewsBy({id});
-        if(review) {
-            next();
-        } else {
-            res.status(400).json({message: `Review with id ${id} does not exist`})
-        }
-    }
-    catch(error) {
-        res.status(500).json({message: "validateReviewId Error", error: error})
-    }
-}
 
 module.exports = router;
