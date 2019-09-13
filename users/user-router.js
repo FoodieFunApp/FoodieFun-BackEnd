@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
+const {validateUserId, validateReviewId, validateReviewInputs, authorizeUser} = require('../middlewares.js');
 
 const Users = require('./user-model.js');
 
 //Routers
 
-router.get('/:userId', validateUserId, async (req, res) => {
+router.get('/:userId', authorizeUser, validateUserId, async (req, res) => {
     const {userId} = req.params;
     const user = req.body;
     try {
@@ -19,7 +19,7 @@ router.get('/:userId', validateUserId, async (req, res) => {
     }
 })
 
-router.put('/:userId', validateUserId, async (req, res) => {
+router.put('/:userId', authorizeUser, validateUserId, async (req, res) => {
     const {userId} = req.params;
     const user = req.body;
     try {
@@ -31,7 +31,7 @@ router.put('/:userId', validateUserId, async (req, res) => {
     }
 })
 
-router.delete('/:userId', validateUserId, async (req, res) => {
+router.delete('/:userId', authorizeUser, validateUserId, async (req, res) => {
     const id = req.params.userId;
     try {
         const deletedUser = await Users.getUserBy({id})
@@ -43,7 +43,30 @@ router.delete('/:userId', validateUserId, async (req, res) => {
     }
 })
 
-router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async (req, res) => {
+router.get('/:userId/reviews', authorizeUser, validateUserId, async(req, res) => {
+    const {userId} = req.params
+    try {
+        const reviews = await Users.getReviews(userId)
+        res.status(200).json(reviews)
+    }
+    catch(error) {
+        res.status(500).json({message: "Could Not Get Reviews", error: error})
+    }
+})
+
+router.post('/:userId/reviews', authorizeUser, validateUserId, validateReviewInputs, async ( req, res ) => {
+    const review = req.body
+    try {
+        console.log(review)
+        const add = await Users.addReview(review)
+        res.status(200).json({message: "Review Added", review: review})
+    }
+    catch(error) {
+        res.status(500).json({message: "Could Not Add Review", error: error})
+    }
+})
+
+router.put('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, validateReviewInputs, async (req, res) => {
     const {reviewId} = req.params;
     const review = req.body;
     try {
@@ -55,7 +78,7 @@ router.put('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async
     }
 })
 
-router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, async (req, res) => {
+router.delete('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, async (req, res) => {
     const id = req.params.reviewId;
     try {
         const deletedReview = await Users.getReviewsBy({id});
@@ -66,7 +89,5 @@ router.delete('/:userId/reviews/:reviewId', validateUserId, validateReviewId, as
         res.status(500).json({message: "Could Not Delete Review", error: error});
     }
 })
-
-
 
 module.exports = router;
