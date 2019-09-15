@@ -32,14 +32,14 @@ function authorizeUser(req, res, next) { //middleware for authorization
     if(authorization) {
         jwt.verify(authorization, secrets.jwtSecret, (err, decodedToken) => {
             if(err) {
-                res.status(401).json({message: 'areyouserious?'});
+                res.status(401).json({message: 'unauthorized token'});
             } else { 
                 req.decodedJwt = decodedToken;
                 next();
             }
         })
     } else {
-        res.status(401).json({message: 'nope not gonna work'});
+        res.status(401).json({message: 'no auth token'});
     }
 };
 
