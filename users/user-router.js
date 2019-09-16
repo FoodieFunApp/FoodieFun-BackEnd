@@ -7,6 +7,16 @@ const Users = require('./user-model.js');
 
 //Routers
 
+router.get('/', async (req, res) => {
+    try {
+        const users = await Users.getUsers()
+        res.status(200).json(users)
+    }
+    catch(error) {
+        res.status(500).json({message: "Could Not Get Users", error: error})
+    }
+})
+
 router.get('/:userId', authorizeUser, validateUserId, async (req, res) => {
     const {userId} = req.params;
     const user = req.body;
@@ -69,9 +79,11 @@ router.post('/:userId/reviews', authorizeUser, validateUserId, validateReviewInp
 router.put('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, validateReviewInputs, async (req, res) => {
     const {reviewId} = req.params;
     const review = req.body;
+    const {userId} = req.params;
     try {
         await Users.updateReview(reviewId, review);
-        res.status(201).json({message: "Updated Review", review: review})
+        const reviewList = await Users.getReviews(userId)
+        res.status(201).json({message: "Updated Review", review: review, reviewList: reviewList})
     }
     catch(error) {
         res.status(500).json({message: "Could Not Get Review", error: error});
@@ -79,11 +91,12 @@ router.put('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validate
 })
 
 router.delete('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, async (req, res) => {
-    const id = req.params.reviewId;
+    const reviewId = req.params.reviewId;
+    const userId = req.params.userId;
     try {
-        const deletedReview = await Users.getReviewsBy({id});
-        await Users.deleteReview(id);
-        res.status(201).json({message: "Review Deleted", deletedReview: deletedReview})
+        await Users.deleteReview(reviewId);
+        const reviewList = await Users.getReviews(userId);
+        res.status(201).json({message: "Review Deleted", reviewList: reviewList})
     }
     catch(error) {
         res.status(500).json({message: "Could Not Delete Review", error: error});

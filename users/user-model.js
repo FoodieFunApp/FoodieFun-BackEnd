@@ -4,6 +4,7 @@ module.exports = {
     addUser,
     deleteUser,
     getUserBy,
+    getUsers,
     updateUser,
     addReview,
     updateReview,
@@ -24,12 +25,16 @@ async function getUserBy(filter) {
     return await db('users').where(filter).first()
 }
 
+async function getUsers() {
+    return await db('users')
+}
+
 async function updateUser(id, user) {
     return await db('users').where({ id }).update(user)
 }
 
-async function getReviews() {
-    return await db('reviews')
+async function getReviews(userId) {
+    return await db('reviews').where({userId})
 }
 
 async function getReviewsBy(filter) {
