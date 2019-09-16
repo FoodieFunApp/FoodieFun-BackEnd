@@ -79,9 +79,11 @@ router.post('/:userId/reviews', authorizeUser, validateUserId, validateReviewInp
 router.put('/:userId/reviews/:reviewId', authorizeUser, validateUserId, validateReviewId, validateReviewInputs, async (req, res) => {
     const {reviewId} = req.params;
     const review = req.body;
+    const {userId} = req.params;
     try {
         await Users.updateReview(reviewId, review);
-        res.status(201).json({message: "Updated Review", review: review})
+        const reviewList = await Users.getReviews(userId)
+        res.status(201).json({message: "Updated Review", review: review, reviewList: reviewList})
     }
     catch(error) {
         res.status(500).json({message: "Could Not Get Review", error: error});
