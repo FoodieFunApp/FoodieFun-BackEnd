@@ -39,7 +39,7 @@ const authorizeUser = (req, res, next) => { //middleware for authorization
         })
     } else {
         res.status(401).json({message: 'nope not gonna work'});
-    }
+
 };
 
 const validateUser = (req, res, next) => { //middleware for validating user and users
