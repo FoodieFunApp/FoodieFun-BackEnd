@@ -42,7 +42,7 @@ const authorizeUser = (req, res, next) => { //middleware for authorization
     }
 };
 
-const validateUser = (req, res, next) => { //middleware for validating user or users
+const validateUser = (req, res, next) => { //middleware for validating user and users
     const { username, password } = req.body;
 
     if (username && password ) {
