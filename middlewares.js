@@ -9,7 +9,7 @@ module.exports = {
 }
 
 
-async function validateUserId(req, res, next) { //middlware for validating userID
+async function validateUserId(req, res, next) { //middleware for validating userID
     const { userId } = req.params;
     try {
         const user = await Users.getUserBy({ id: userId });
